@@ -1,49 +1,75 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ==========================================
+   Base Layer Overrides
+   ========================================== */
+@layer base {
+  * {
+    @apply box-border m-0 p-0;
+  }
+
+  body {
+    @apply font-body bg-surface-primary text-text-primary antialiased pb-[70px];
+    line-height: 1.5;
+  }
+
+  @media (min-width: 1025px) {
+    body {
+      @apply h-screen flex justify-center overflow-hidden;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    body {
+      @apply min-h-screen flex justify-center overflow-x-hidden;
+    }
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-1.5 h-1.5;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-primary;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Date picker dark mode */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(0.9);
+    @apply cursor-pointer opacity-40 transition-opacity;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    @apply opacity-80;
   }
 }
 
-html {
-  height: 100%;
-}
+/* ==========================================
+   Component Layer
+   ========================================== */
+@layer components {
+  /* Checkmark tick geometry - can't do in utilities */
+  .checkmark-tick:after {
+    content: "";
+    @apply absolute hidden;
+    left: 7.5px;
+    top: 3.5px;
+    width: 5px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 1.8px 1.8px 0;
+    transform: rotate(45deg);
+  }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+  input:checked ~ .checkmark-tick:after {
+    @apply block;
   }
 }
