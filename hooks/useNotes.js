@@ -1,77 +1,118 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { generateUUID } from '@/lib/utils';
+import { useAuth } from '@/context/AuthContext';
+import { getSupabase } from '@/lib/supabase';
 
-const STORAGE_KEY = 'celite-notes-data';
-
-const DEFAULT_STATE = {
-  notes: [],
-};
+// Map Supabase snake_case to frontend camelCase
+function mapNoteFromDB(row) {
+  return {
+    id: row.id,
+    title: row.title || 'Untitled Note',
+    content: row.content || '',
+    type: row.type || 'note',
+    labels: row.labels || [],
+    createdAt: row.created_at,
+  };
+}
 
 export function useNotes() {
-  const [data, setData] = useState(DEFAULT_STATE);
+  const [notes, setNotes] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { user } = useAuth();
 
-  // Load from localStorage on mount
+  // Fetch notes from Supabase
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setData({
-          notes: Array.isArray(parsed.notes) ? parsed.notes : [],
-        });
-      } catch (e) {
-        console.error('Error parsing notes data. Resetting.', e);
-        setData(DEFAULT_STATE);
+    if (!user) {
+      setNotes([]);
+      setIsLoaded(true);
+      return;
+    }
+
+    async function fetchNotes() {
+      const supabase = getSupabase();
+      const { data, error } = await supabase
+        .from('notes')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching notes:', error);
+        setNotes([]);
+      } else {
+        setNotes(data.map(mapNoteFromDB));
       }
+      setIsLoaded(true);
     }
-    setIsLoaded(true);
-  }, []);
 
-  // Save to localStorage whenever data changes
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-  }, [data, isLoaded]);
+    fetchNotes();
+  }, [user]);
 
-  const addNote = useCallback((noteData) => {
+  const addNote = useCallback(async (noteData) => {
+    if (!user) return;
+    const supabase = getSupabase();
+
     const newNote = {
-      id: generateUUID(),
+      user_id: user.id,
       title: (noteData.title || 'Untitled Note').trim(),
       content: (noteData.content || '').trim(),
-      type: noteData.type || 'note', // 'note' | 'brainstorm' | 'checklist'
+      type: noteData.type || 'note',
       labels: Array.isArray(noteData.labels) ? noteData.labels : [],
-      createdAt: new Date().toISOString(),
     };
-    setData((prev) => ({
-      ...prev,
-      notes: [newNote, ...prev.notes],
-    }));
-    return newNote;
+
+    const { data, error } = await supabase
+      .from('notes')
+      .insert(newNote)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error adding note:', error);
+      return;
+    }
+    const mapped = mapNoteFromDB(data);
+    setNotes((prev) => [mapped, ...prev]);
+    return mapped;
+  }, [user]);
+
+  const deleteNote = useCallback(async (id) => {
+    const supabase = getSupabase();
+    const { error } = await supabase.from('notes').delete().eq('id', id);
+    if (error) {
+      console.error('Error deleting note:', error);
+      return;
+    }
+    setNotes((prev) => prev.filter((n) => n.id !== id));
   }, []);
 
-  const deleteNote = useCallback((id) => {
-    setData((prev) => ({
-      ...prev,
-      notes: prev.notes.filter((n) => n.id !== id),
-    }));
+  const updateNote = useCallback(async (id, updates) => {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from('notes')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating note:', error);
+      return;
+    }
+    setNotes((prev) => prev.map((n) => (n.id === id ? mapNoteFromDB(data) : n)));
   }, []);
 
-  const updateNote = useCallback((id, updates) => {
-    setData((prev) => ({
-      ...prev,
-      notes: prev.notes.map((n) => (n.id === id ? { ...n, ...updates } : n)),
-    }));
-  }, []);
+  const clearAllNotes = useCallback(async () => {
+    if (!user) return;
+    const supabase = getSupabase();
+    const { error } = await supabase.from('notes').delete().eq('user_id', user.id);
+    if (error) {
+      console.error('Error clearing notes:', error);
+      return;
+    }
+    setNotes([]);
+  }, [user]);
 
-  const clearAllNotes = useCallback(() => {
-    setData({ notes: [] });
-  }, []);
-
-  const notes = data.notes;
   const noteCount = notes.filter((n) => n.type === 'note').length;
   const brainstormCount = notes.filter((n) => n.type === 'brainstorm').length;
   const checklistCount = notes.filter((n) => n.type === 'checklist').length;

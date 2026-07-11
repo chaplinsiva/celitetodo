@@ -1,83 +1,128 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { generateUUID } from '@/lib/utils';
+import { useAuth } from '@/context/AuthContext';
+import { getSupabase } from '@/lib/supabase';
 
-const STORAGE_KEY = 'celite-finance-data';
-
-const DEFAULT_STATE = {
-  transactions: [],
-};
+// Map Supabase snake_case to frontend camelCase
+function mapTransactionFromDB(row) {
+  return {
+    id: row.id,
+    type: row.type,
+    amount: Number(row.amount),
+    label: row.label || '',
+    category: row.category || 'General',
+    description: row.description || '',
+    date: row.date || '',
+    createdAt: row.created_at,
+  };
+}
 
 export function useFinance() {
-  const [data, setData] = useState(DEFAULT_STATE);
+  const [transactions, setTransactions] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { user } = useAuth();
 
-  // Load from localStorage on mount
+  // Fetch transactions from Supabase
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setData({
-          transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-        });
-      } catch (e) {
-        console.error('Error parsing finance data. Resetting.', e);
-        setData(DEFAULT_STATE);
+    if (!user) {
+      setTransactions([]);
+      setIsLoaded(true);
+      return;
+    }
+
+    async function fetchTransactions() {
+      const supabase = getSupabase();
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching transactions:', error);
+        setTransactions([]);
+      } else {
+        setTransactions(data.map(mapTransactionFromDB));
       }
+      setIsLoaded(true);
     }
-    setIsLoaded(true);
-  }, []);
 
-  // Save to localStorage whenever data changes
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-  }, [data, isLoaded]);
+    fetchTransactions();
+  }, [user]);
 
-  const addTransaction = useCallback((txData) => {
+  const addTransaction = useCallback(async (txData) => {
+    if (!user) return;
+    const supabase = getSupabase();
+
     const newTx = {
-      id: generateUUID(),
-      type: txData.type || 'expense', // 'income' | 'expense' | 'savings' | 'investment'
+      user_id: user.id,
+      type: txData.type || 'expense',
       amount: Math.abs(Number(txData.amount) || 0),
       label: (txData.label || '').trim(),
       category: (txData.category || 'General').trim(),
       description: (txData.description || '').trim(),
       date: txData.date || new Date().toISOString().split('T')[0],
-      createdAt: new Date().toISOString(),
     };
-    setData((prev) => ({
-      ...prev,
-      transactions: [newTx, ...prev.transactions],
-    }));
-    return newTx;
+
+    const { data, error } = await supabase
+      .from('transactions')
+      .insert(newTx)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error adding transaction:', error);
+      return;
+    }
+    const mapped = mapTransactionFromDB(data);
+    setTransactions((prev) => [mapped, ...prev]);
+    return mapped;
+  }, [user]);
+
+  const deleteTransaction = useCallback(async (id) => {
+    const supabase = getSupabase();
+    const { error } = await supabase.from('transactions').delete().eq('id', id);
+    if (error) {
+      console.error('Error deleting transaction:', error);
+      return;
+    }
+    setTransactions((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  const deleteTransaction = useCallback((id) => {
-    setData((prev) => ({
-      ...prev,
-      transactions: prev.transactions.filter((t) => t.id !== id),
-    }));
+  const updateTransaction = useCallback(async (id, updates) => {
+    const supabase = getSupabase();
+    const dbUpdates = { ...updates };
+    if ('amount' in dbUpdates) {
+      dbUpdates.amount = Math.abs(Number(dbUpdates.amount) || 0);
+    }
+
+    const { data, error } = await supabase
+      .from('transactions')
+      .update(dbUpdates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating transaction:', error);
+      return;
+    }
+    setTransactions((prev) => prev.map((t) => (t.id === id ? mapTransactionFromDB(data) : t)));
   }, []);
 
-  const updateTransaction = useCallback((id, updates) => {
-    setData((prev) => ({
-      ...prev,
-      transactions: prev.transactions.map((t) =>
-        t.id === id ? { ...t, ...updates, amount: Math.abs(Number(updates.amount) || 0) } : t
-      ),
-    }));
-  }, []);
+  const clearAllTransactions = useCallback(async () => {
+    if (!user) return;
+    const supabase = getSupabase();
+    const { error } = await supabase.from('transactions').delete().eq('user_id', user.id);
+    if (error) {
+      console.error('Error clearing transactions:', error);
+      return;
+    }
+    setTransactions([]);
+  }, [user]);
 
-  const clearAllTransactions = useCallback(() => {
-    setData({ transactions: [] });
-  }, []);
-
-  // Computed values
-  const transactions = data.transactions;
-
+  // Computed values (from state, client-side)
   const totalIncome = transactions
     .filter((t) => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0);

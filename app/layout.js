@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';
+import { AuthProvider } from '@/context/AuthContext';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -43,8 +44,10 @@ export default function RootLayout({ children }) {
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body>
-        {children}
-        <PWAInstallPrompt />
+        <AuthProvider>
+          {children}
+          <PWAInstallPrompt />
+        </AuthProvider>
       </body>
     </html>
   );

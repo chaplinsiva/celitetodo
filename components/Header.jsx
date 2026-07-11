@@ -1,11 +1,24 @@
 'use client';
 
-import { CheckSquare, Wallet, FileText } from 'lucide-react';
+import { CheckSquare, Wallet, FileText, LogOut } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Header({ tasks, activeTab, onTabChange, financeStats, notesStats }) {
+  const { user, signOut } = useAuth();
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((t) => t.completed).length;
   const routinesTasks = tasks.filter((t) => !!t.routine).length;
+
+  // Get first letter of email for avatar
+  const avatarLetter = user?.email?.[0]?.toUpperCase() || '?';
+
+  async function handleSignOut() {
+    try {
+      await signOut();
+    } catch (err) {
+      console.error('Sign out error:', err);
+    }
+  }
 
   return (
     <header className="flex flex-col gap-3 pb-3">
@@ -21,7 +34,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
           </div>
         </div>
 
-        {/* Stats */}
+        {/* Stats + User */}
         <div className="flex gap-4 items-center">
           {activeTab === 'tasks' && (
             <>
@@ -88,6 +101,29 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
                   {notesStats?.checklistCount || 0}
                 </span>
                 <span className="text-xs text-text-secondary">Checklists</span>
+              </div>
+            </>
+          )}
+
+          {/* User avatar + sign out */}
+          {user && (
+            <>
+              <span className="text-text-muted hidden sm:inline">|</span>
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-[30px] h-[30px] rounded-full flex items-center justify-center text-[0.7rem] font-bold text-white bg-gradient-to-br from-accent-purple to-accent-blue flex-shrink-0"
+                  title={user.email}
+                >
+                  {avatarLetter}
+                </div>
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center gap-1 bg-transparent border-none text-text-secondary text-xs cursor-pointer hover:text-accent-red transition-colors py-1 px-1.5 rounded-md hover:bg-white/5"
+                  title="Sign out"
+                >
+                  <LogOut size={13} />
+                  <span className="hidden sm:inline">Sign Out</span>
+                </button>
               </div>
             </>
           )}

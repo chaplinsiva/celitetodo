@@ -11,18 +11,23 @@
   }
 
   body {
-    @apply font-body bg-surface-primary text-text-primary antialiased pb-[70px];
+    @apply font-body bg-surface-primary text-text-primary antialiased;
     line-height: 1.5;
   }
 
+  /* App layout styles — only when the dashboard is active (not login page) */
+  body:has(> [data-app-shell]) {
+    @apply pb-[70px];
+  }
+
   @media (min-width: 1025px) {
-    body {
+    body:has(> [data-app-shell]) {
       @apply h-screen flex justify-center overflow-hidden;
     }
   }
 
   @media (max-width: 1024px) {
-    body {
+    body:has(> [data-app-shell]) {
       @apply min-h-screen flex justify-center overflow-x-hidden;
     }
   }

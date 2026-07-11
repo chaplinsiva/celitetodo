@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { useTasks } from '@/hooks/useTasks';
 import { useFinance } from '@/hooks/useFinance';
 import { useNotes } from '@/hooks/useNotes';
@@ -19,6 +21,8 @@ import EditNoteModal from '@/components/modals/EditNoteModal';
 import DeleteModal from '@/components/modals/DeleteModal';
 
 export default function Home() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
   const { tasks, isLoaded, addTask, updateTask, deleteTask, clearAllTasks, toggleTask } = useTasks();
   const finance = useFinance();
   const notes = useNotes();
@@ -43,6 +47,13 @@ export default function Home() {
 
   const [addNoteModalOpen, setAddNoteModalOpen] = useState(false);
   const [editNote, setEditNote] = useState(null);
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, authLoading, router]);
 
   function handleFilterChange(filter) {
     setActiveFilter(filter);
@@ -75,16 +86,17 @@ export default function Home() {
     }
   }
 
-  if (!isLoaded || !finance.isLoaded || !notes.isLoaded) {
+  // Show loading while auth is checking or if not authenticated (will redirect)
+  if (authLoading || !user || !isLoaded || !finance.isLoaded || !notes.isLoaded) {
     return (
-      <div className="w-full max-w-[1060px] flex flex-col items-center justify-center h-[calc(100vh-70px)]">
+      <div data-app-shell className="w-full max-w-[1060px] flex flex-col items-center justify-center h-[calc(100vh-70px)]">
         <p className="text-text-secondary text-sm">Loading...</p>
       </div>
     );
   }
 
   return (
-    <>
+    <div data-app-shell>
       <div className="w-full max-w-[1060px] flex flex-col gap-6 md:gap-8 lg:gap-5 lg:h-[calc(100vh-70px)] lg:overflow-hidden p-4 md:p-6 lg:p-8 pb-0">
         <Header
           tasks={tasks}
@@ -221,6 +233,6 @@ export default function Home() {
         onClose={() => setDeleteTaskId(null)}
         onConfirm={handleConfirmDelete}
       />
-    </>
+    </div>
   );
 }
