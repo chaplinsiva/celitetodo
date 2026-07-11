@@ -136,39 +136,39 @@ export default function ChatBar({
 
       const newHistoryItems = [];
 
-      actions.forEach((act) => {
+      for (const act of actions) {
         if (act.type === 'clear_finance') {
-          onClearTransactions?.();
+          await onClearTransactions?.();
           newHistoryItems.push({
             role: 'system_action',
             text: 'Cleared all transactions.',
             timestamp: Date.now(),
           });
         } else if (act.type === 'clear_tasks') {
-          onClearTasks?.();
+          await onClearTasks?.();
           newHistoryItems.push({
             role: 'system_action',
             text: 'Cleared all tasks.',
             timestamp: Date.now(),
           });
         } else if (act.type === 'clear_notes') {
-          onClearNotes?.();
+          await onClearNotes?.();
           newHistoryItems.push({
             role: 'system_action',
             text: 'Cleared all notes.',
             timestamp: Date.now(),
           });
         } else if (act.type === 'clear_all') {
-          onClearTransactions?.();
-          onClearTasks?.();
-          onClearNotes?.();
+          await onClearTransactions?.();
+          await onClearTasks?.();
+          await onClearNotes?.();
           newHistoryItems.push({
             role: 'system_action',
             text: 'Cleared all data.',
             timestamp: Date.now(),
           });
         } else if (act.type === 'finance') {
-          onAddTransaction(act.data);
+          await onAddTransaction(act.data);
           newHistoryItems.push({
             role: 'finance',
             text: `${act.data.type}: ₹${act.data.amount.toLocaleString('en-IN')}`,
@@ -176,7 +176,7 @@ export default function ChatBar({
             timestamp: Date.now(),
           });
         } else if (act.type === 'note') {
-          onAddNote(act.data);
+          await onAddNote(act.data);
           newHistoryItems.push({
             role: 'note',
             text: `Note: "${act.data.title}"`,
@@ -184,7 +184,7 @@ export default function ChatBar({
             timestamp: Date.now(),
           });
         } else {
-          onAddTask(act.data);
+          await onAddTask(act.data);
           newHistoryItems.push({
             role: 'task',
             text: `Task: "${act.data.title}"`,
@@ -192,7 +192,7 @@ export default function ChatBar({
             timestamp: Date.now(),
           });
         }
-      });
+      }
 
       setChatHistory((prev) => [...prev, ...newHistoryItems]);
     } catch (err) {
