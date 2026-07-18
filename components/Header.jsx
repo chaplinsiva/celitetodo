@@ -25,11 +25,11 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
       <div className="flex justify-between items-center flex-wrap gap-3">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-[42px] h-[42px] rounded-[10px] bg-white/5 border border-border-hairline">
+          <div className="flex items-center justify-center w-[42px] h-[42px] rounded-[10px] bg-gradient-to-br from-blue-500 to-pink-500 text-white shadow-md shadow-pink-500/20">
             <CheckSquare className="text-white w-[22px] h-[22px]" />
           </div>
           <div>
-            <h1 className="font-heading text-2xl font-semibold tracking-tight text-white">Celite Manager</h1>
+            <h1 className="font-heading text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-400 via-pink-400 to-pink-500 bg-clip-text text-transparent">Celite Manager</h1>
             <p className="text-xs text-text-secondary font-normal">Tasks, finances &amp; notes, powered by AI</p>
           </div>
         </div>
@@ -111,7 +111,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
               <span className="text-text-muted hidden sm:inline">|</span>
               <div className="flex items-center gap-2">
                 <div
-                  className="w-[30px] h-[30px] rounded-full flex items-center justify-center text-[0.7rem] font-bold text-white bg-gradient-to-br from-accent-purple to-accent-blue flex-shrink-0"
+                  className="w-[30px] h-[30px] rounded-full flex items-center justify-center text-[0.7rem] font-bold text-white bg-gradient-to-br from-blue-500 to-pink-500 flex-shrink-0"
                   title={user.email}
                 >
                   {avatarLetter}
