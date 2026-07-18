@@ -1,13 +1,14 @@
 'use client';
 
-import { CheckSquare, Wallet, FileText, LogOut } from 'lucide-react';
+import { CheckSquare, Wallet, FileText, LogOut, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
 export default function Header({ tasks, activeTab, onTabChange, financeStats, notesStats }) {
   const { user, signOut } = useAuth();
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter((t) => t.completed).length;
-  const routinesTasks = tasks.filter((t) => !!t.routine).length;
+  const totalTasks = tasks?.length || 0;
+  const completedTasks = tasks?.filter((t) => t.completed).length || 0;
+  const routinesTasks = tasks?.filter((t) => !!t.routine).length || 0;
 
   // Get first letter of email for avatar
   const avatarLetter = user?.email?.[0]?.toUpperCase() || '?';
@@ -34,7 +35,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
           </div>
         </div>
 
-        {/* Stats + User */}
+        {/* Stats + Pricing + User */}
         <div className="flex gap-4 items-center">
           {activeTab === 'tasks' && (
             <>
@@ -104,6 +105,16 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
               </div>
             </>
           )}
+
+          {/* Pricing Button */}
+          <Link
+            href="/pricing"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500/20 via-pink-500/20 to-purple-500/20 text-amber-300 border border-amber-500/30 hover:border-amber-400 hover:scale-105 transition-all shadow-sm shadow-amber-500/10 cursor-pointer"
+            id="pricing-button"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            <span>Pricing</span>
+          </Link>
 
           {/* User avatar + sign out */}
           {user && (
