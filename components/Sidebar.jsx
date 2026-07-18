@@ -3,11 +3,9 @@
 import { Layers, Circle, CheckCircle2, RefreshCw } from 'lucide-react';
 import { getLabelColor } from '@/lib/utils';
 
-import CompletedTasks from './CompletedTasks';
-
 const FILTERS = [
-  { key: 'all', label: 'All Tasks', icon: Layers },
   { key: 'active', label: 'Active', icon: Circle },
+  { key: 'all', label: 'All Tasks', icon: Layers },
   { key: 'completed', label: 'Completed', icon: CheckCircle2 },
   { key: 'routine', label: 'Routine Tasks', icon: RefreshCw },
 ];
@@ -18,8 +16,6 @@ export default function Sidebar({
   onFilterChange,
   activeLabelFilter,
   onLabelFilterChange,
-  onToggle,
-  onDelete,
 }) {
   const counts = {
     all: tasks.length,
@@ -40,7 +36,7 @@ export default function Sidebar({
   const sortedLabels = Object.keys(labelCounts).sort((a, b) => a.localeCompare(b));
 
   return (
-    <aside className="hidden md:grid md:grid-cols-2 md:gap-6 lg:flex lg:flex-col lg:gap-6 lg:h-full lg:overflow-y-auto lg:pr-2">
+    <aside className="hidden md:grid md:grid-cols-2 md:gap-6 lg:flex lg:flex-col lg:gap-10 lg:h-full lg:overflow-y-auto lg:pr-2">
       <section className="bg-surface-panel border border-border-hairline backdrop-blur-3xl rounded-lg p-6">
         <h2 className="font-heading text-lg font-semibold mb-5 tracking-tight text-white">Filters</h2>
         <div className="flex flex-col gap-1.5" id="filterButtons">
@@ -102,9 +98,6 @@ export default function Sidebar({
           </div>
         </div>
       </section>
-
-      <CompletedTasks tasks={tasks} onToggle={onToggle} onDelete={onDelete} />
     </aside>
   );
 }
-
