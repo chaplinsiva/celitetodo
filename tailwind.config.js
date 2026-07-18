@@ -49,6 +49,8 @@ module.exports = {
         'modal-in': 'modalIn 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards',
         'slide-up': 'slideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards',
         'spin-slow': 'spin 1s linear infinite',
+        'task-complete-out': 'taskCompleteOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'task-complete-in': 'taskCompleteIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards',
       },
       keyframes: {
         springLoad: {
@@ -62,6 +64,15 @@ module.exports = {
         slideUp: {
           from: { transform: 'translateY(100%)', opacity: '0' },
           to: { transform: 'translateY(0)', opacity: '1' },
+        },
+        taskCompleteOut: {
+          '0%': { opacity: '1', transform: 'scale(1) translateX(0)', maxHeight: '200px' },
+          '50%': { opacity: '0.4', transform: 'scale(0.97) translateX(-8px)' },
+          '100%': { opacity: '0', transform: 'scale(0.95) translateX(-20px)', maxHeight: '0px', padding: '0', margin: '0', overflow: 'hidden' },
+        },
+        taskCompleteIn: {
+          from: { opacity: '0', transform: 'scale(0.95) translateX(10px)' },
+          to: { opacity: '1', transform: 'scale(1) translateX(0)' },
         },
       },
     },

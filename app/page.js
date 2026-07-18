@@ -125,6 +125,8 @@ export default function Home() {
               onFilterChange={handleFilterChange}
               activeLabelFilter={activeLabelFilter}
               onLabelFilterChange={setActiveLabelFilter}
+              onToggle={toggleTask}
+              onDelete={setDeleteTaskId}
             />
 
             <TaskList
