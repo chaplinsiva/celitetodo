@@ -9,7 +9,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## GitHub Repository Details
 - **Repository URL**: `https://github.com/chaplinsiva/celitetodo.git`
 - **Primary Branches**: `main` / `master`
-- **Current Active Feature Branch**: `feature/pricing-page`
+- **Current Active Branch**: `main`
 
 ## High-Level Tech Stack
 - **Framework**: Next.js 16 (App Router)
