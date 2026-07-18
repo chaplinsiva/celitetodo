@@ -1,9 +1,33 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import { Edit3, Trash2, Calendar, AlertCircle, Clock, RefreshCw } from 'lucide-react';
 import { getLabelColor, formatDate, formatRelativeDate, getTodayString } from '@/lib/utils';
 
 export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleToggle = () => {
+    if (!task.completed && !isFadingOut) {
+      setIsFadingOut(true);
+      timeoutRef.current = setTimeout(() => {
+        onToggle(task.id);
+      }, 400);
+    } else if (task.completed) {
+      setIsFadingOut(false);
+      onToggle(task.id);
+    }
+  };
+
   const todayStr = getTodayString();
   const isOverdue = !task.completed && task.dueDate && task.dueDate < todayStr;
   const isDueToday = !task.completed && task.dueDate && task.dueDate === todayStr;
@@ -28,10 +52,14 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
     ? task.routine.charAt(0).toUpperCase() + task.routine.slice(1)
     : '';
 
+  const isChecked = task.completed || isFadingOut;
+
   return (
     <li
-      className={`group bg-surface-card border rounded-md p-5 flex gap-4 items-start transition-all duration-300 animate-spring-load hover:bg-surface-card-hover hover:border-white/12 ${
-        task.completed ? 'border-border-hairline bg-white/[0.005]' : 'border-border-hairline'
+      className={`group bg-surface-card border rounded-md p-5 flex gap-4 items-start transition-all duration-300 ${
+        isFadingOut ? 'animate-task-fade-out pointer-events-none' : 'animate-spring-load'
+      } hover:bg-surface-card-hover hover:border-white/12 ${
+        isChecked ? 'border-border-hairline bg-white/[0.005]' : 'border-border-hairline'
       }`}
       data-id={task.id}
     >
@@ -39,12 +67,12 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
         <input
           type="checkbox"
           className="absolute opacity-0 cursor-pointer h-0 w-0"
-          checked={task.completed}
-          onChange={() => onToggle(task.id)}
+          checked={isChecked}
+          onChange={handleToggle}
         />
         <span
           className={`absolute top-0 left-0 h-[22px] w-[22px] rounded-full border transition-all checkmark-tick ${
-            task.completed
+            isChecked
               ? 'bg-accent-blue border-accent-blue'
               : 'border-text-secondary bg-transparent hover:border-white hover:bg-white/[0.04]'
           }`}
@@ -54,9 +82,9 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
         <div className="flex items-start justify-between gap-4">
           <h3
             className={`font-heading text-base font-medium text-white leading-normal break-words overflow-wrap-break-word transition-all cursor-pointer hover:text-accent-blue-hover ${
-              task.completed ? 'line-through text-text-secondary opacity-55' : ''
+              isChecked ? 'line-through text-text-secondary opacity-55' : ''
             }`}
-            onClick={() => onEdit(task)}
+            onClick={() => !isFadingOut && onEdit(task)}
           >
             {task.title}
           </h3>
@@ -80,9 +108,9 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
         {task.description && (
           <p
             className={`text-xs text-text-secondary mt-1 break-words overflow-wrap-break-word leading-normal cursor-pointer hover:text-text-primary ${
-              task.completed ? 'opacity-45' : ''
+              isChecked ? 'opacity-45' : ''
             }`}
-            onClick={() => onEdit(task)}
+            onClick={() => !isFadingOut && onEdit(task)}
           >
             {task.description}
           </p>

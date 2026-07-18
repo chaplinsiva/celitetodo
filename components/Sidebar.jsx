@@ -4,8 +4,8 @@ import { Layers, Circle, CheckCircle2, RefreshCw } from 'lucide-react';
 import { getLabelColor } from '@/lib/utils';
 
 const FILTERS = [
-  { key: 'all', label: 'All Tasks', icon: Layers },
   { key: 'active', label: 'Active', icon: Circle },
+  { key: 'all', label: 'All Tasks', icon: Layers },
   { key: 'completed', label: 'Completed', icon: CheckCircle2 },
   { key: 'routine', label: 'Routine Tasks', icon: RefreshCw },
 ];

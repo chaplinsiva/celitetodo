@@ -31,7 +31,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('tasks');
 
   // Task UI state
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeFilter, setActiveFilter] = useState('active');
   const [activeLabelFilter, setActiveLabelFilter] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchMode, setSearchMode] = useState('word');

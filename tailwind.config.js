@@ -49,11 +49,17 @@ module.exports = {
         'modal-in': 'modalIn 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards',
         'slide-up': 'slideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards',
         'spin-slow': 'spin 1s linear infinite',
+        'task-fade-out': 'taskFadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards',
       },
       keyframes: {
         springLoad: {
           from: { transform: 'scale(0.97) translateY(5px)', opacity: '0' },
           to: { transform: 'scale(1) translateY(0)', opacity: '1' },
+        },
+        taskFadeOut: {
+          '0%': { opacity: '1', transform: 'scale(1) translateY(0)', maxHeight: '300px', marginBottom: '0' },
+          '40%': { opacity: '0', transform: 'scale(0.96) translateY(-4px)', maxHeight: '300px' },
+          '100%': { opacity: '0', transform: 'scale(0.92) translateY(-8px)', maxHeight: '0px', paddingTop: '0px', paddingBottom: '0px', marginTop: '0px', marginBottom: '-12px', border: 'none' },
         },
         modalIn: {
           from: { transform: 'scale(0.96) translateY(5px)', opacity: '0' },
