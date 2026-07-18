@@ -24,8 +24,8 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
     <header className="flex flex-col gap-3 pb-3">
       <div className="flex justify-between items-center flex-wrap gap-3">
         {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-[42px] h-[42px] rounded-[10px] bg-gradient-to-br from-blue-500 to-pink-500 text-white shadow-md shadow-pink-500/20">
+        <div className="flex items-center gap-3 group">
+          <div className="flex items-center justify-center w-[42px] h-[42px] rounded-[10px] bg-gradient-to-br from-blue-500 to-pink-500 text-white shadow-md shadow-pink-500/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-pink-500/30 cursor-pointer">
             <CheckSquare className="text-white w-[22px] h-[22px]" />
           </div>
           <div>
@@ -160,7 +160,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
           <span>Notes</span>
         </button>
         <div
-          className="absolute top-[3px] left-[3px] w-[calc(33.333%-3px)] h-[calc(100%-6px)] bg-white/10 rounded-full transition-transform duration-300 ease-out pointer-events-none"
+          className="absolute top-[3px] left-[3px] w-[calc(33.333%-3px)] h-[calc(100%-6px)] bg-gradient-to-r from-blue-500/20 to-pink-500/20 border border-white/10 rounded-full transition-transform duration-300 ease-out pointer-events-none"
           style={{
             transform:
               activeTab === 'tasks'
