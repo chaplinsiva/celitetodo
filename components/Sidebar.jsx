@@ -2,6 +2,7 @@
 
 import { Layers, Circle, CheckCircle2, RefreshCw } from 'lucide-react';
 import { getLabelColor } from '@/lib/utils';
+import AdBanner from '@/components/AdBanner';
 
 const FILTERS = [
   { key: 'active', label: 'Active', icon: Circle },
@@ -36,7 +37,7 @@ export default function Sidebar({
   const sortedLabels = Object.keys(labelCounts).sort((a, b) => a.localeCompare(b));
 
   return (
-    <aside className="hidden md:grid md:grid-cols-2 md:gap-6 lg:flex lg:flex-col lg:gap-10 lg:h-full lg:overflow-y-auto lg:pr-2">
+    <aside className="hidden md:flex md:flex-col md:gap-6 lg:flex lg:flex-col lg:gap-6 lg:h-full lg:overflow-y-auto lg:pr-2">
       <section className="bg-surface-panel border border-border-hairline backdrop-blur-3xl rounded-lg p-6">
         <h2 className="font-heading text-lg font-semibold mb-5 tracking-tight text-white">Filters</h2>
         <div className="flex flex-col gap-1.5" id="filterButtons">
@@ -98,6 +99,9 @@ export default function Sidebar({
           </div>
         </div>
       </section>
+
+      {/* Adsterra 160x300 Banner Unit */}
+      <AdBanner adKey="69bcfc4fe4c608d7a0676856e33f3559" width={160} height={300} />
     </aside>
   );
 }

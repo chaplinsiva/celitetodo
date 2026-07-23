@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 import { AuthProvider } from '@/context/AuthContext';
@@ -48,6 +49,10 @@ export default function RootLayout({ children }) {
           {children}
           <PWAInstallPrompt />
         </AuthProvider>
+        <Script
+          src="https://pl30495157.effectivecpmnetwork.com/97/71/e6/9771e6509339e6feb369af0db20025cf.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
