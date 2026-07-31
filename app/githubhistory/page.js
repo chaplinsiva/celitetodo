@@ -19,7 +19,7 @@ import {
   Sparkles,
   Database,
   Radio,
-  Github,
+  GitPullRequest,
   AlertCircle,
 } from 'lucide-react';
 
@@ -168,7 +168,7 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
           <div>
             <div className="flex items-center gap-2">
               <h1 className="font-heading text-2xl font-bold tracking-tight text-text-primary flex items-center gap-2">
-                <Github className="text-accent-blue w-6 h-6" />
+                <GitPullRequest className="text-accent-blue w-6 h-6" />
                 Live GitHub Webhook History
               </h1>
               <span className="flex items-center gap-1.5 text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
