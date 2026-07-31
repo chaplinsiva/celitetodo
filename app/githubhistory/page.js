@@ -177,7 +177,7 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
               </span>
             </div>
             <p className="text-xs text-text-secondary mt-0.5">
-              Live GitHub repository events for <code className="text-accent-blue font-mono">celitetodo</code>
+              Live GitHub repository event stream for <code className="text-accent-blue font-mono">celitetodo</code>
             </p>
           </div>
         </div>
