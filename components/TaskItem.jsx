@@ -58,8 +58,8 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
     <li
       className={`group bg-surface-card border rounded-md p-5 flex gap-4 items-start transition-all duration-300 ${
         isFadingOut ? 'animate-task-fade-out pointer-events-none' : 'animate-spring-load'
-      } hover:bg-surface-card-hover hover:border-white/12 ${
-        isChecked ? 'border-border-hairline bg-white/[0.005]' : 'border-border-hairline'
+      } hover:bg-surface-card-hover hover:border-border-hairline/80 ${
+        isChecked ? 'border-border-hairline bg-transparent' : 'border-border-hairline'
       }`}
       data-id={task.id}
     >
@@ -74,14 +74,14 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
           className={`absolute top-0 left-0 h-[22px] w-[22px] rounded-full border transition-all checkmark-tick ${
             isChecked
               ? 'bg-accent-blue border-accent-blue'
-              : 'border-text-secondary bg-transparent hover:border-white hover:bg-white/[0.04]'
+              : 'border-text-secondary bg-transparent hover:border-text-primary hover:bg-themeHover'
           }`}
         ></span>
       </label>
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-4">
           <h3
-            className={`font-heading text-base font-medium text-white leading-normal break-words overflow-wrap-break-word transition-all cursor-pointer hover:text-accent-blue-hover ${
+            className={`font-heading text-base font-medium text-text-primary leading-normal break-words overflow-wrap-break-word transition-all cursor-pointer hover:text-accent-blue-hover ${
               isChecked ? 'line-through text-text-secondary opacity-55' : ''
             }`}
             onClick={() => !isFadingOut && onEdit(task)}
@@ -90,7 +90,7 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
           </h3>
           <div className="flex gap-1.5 opacity-0 group-hover:opacity-85 transition-opacity duration-150">
             <button
-              className="bg-transparent border-none text-text-secondary w-7 h-7 rounded-sm flex items-center justify-center cursor-pointer transition-all hover:text-white hover:bg-white/[0.08]"
+              className="bg-transparent border-none text-text-secondary w-7 h-7 rounded-sm flex items-center justify-center cursor-pointer transition-all hover:text-text-primary hover:bg-themeHover"
               aria-label="Edit task"
               onClick={() => onEdit(task)}
             >

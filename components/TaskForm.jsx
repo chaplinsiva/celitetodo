@@ -111,7 +111,7 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
             setTitle(e.target.value);
             if (titleError) setTitleError('');
           }}
-          className={`bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)] ${
+          className={`bg-surface-input border border-transparent rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)] ${
             titleError ? 'border-accent-red focus:border-accent-red focus:shadow-[0_0_0_3px_rgba(255,69,58,0.2)]' : ''
           }`}
         />
@@ -126,7 +126,7 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
       {/* Description */}
       <div className="flex flex-col gap-2 mb-5">
         <label className="text-xs font-semibold text-text-primary">
-          Description <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-white/5 px-1 py-0.5 rounded-sm">Optional</span>
+          Description <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-surface-input px-1 py-0.5 rounded-sm">Optional</span>
         </label>
         <textarea
           placeholder="Provide extra details..."
@@ -137,7 +137,7 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
             setDescription(e.target.value);
             if (descError) setDescError('');
           }}
-          className={`bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)] ${
+          className={`bg-surface-input border border-transparent rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)] ${
             descError ? 'border-accent-red focus:border-accent-red focus:shadow-[0_0_0_3px_rgba(255,69,58,0.2)]' : ''
           }`}
         />
@@ -152,23 +152,23 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
       {/* Labels */}
       <div className="flex flex-col gap-2 mb-5">
         <label className="text-xs font-semibold text-text-primary">
-          Labels <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-white/5 px-1 py-0.5 rounded-sm">Optional</span>
+          Labels <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-surface-input px-1 py-0.5 rounded-sm">Optional</span>
         </label>
         <input
           type="text"
           placeholder="Work, Personal, Urgent (comma separated)"
           value={labels}
           onChange={(e) => setLabels(e.target.value)}
-          className="bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
+          className="bg-surface-input border border-transparent rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
         />
         <div className="flex flex-wrap gap-1.5 mt-2">
           {QUICK_LABELS.map((ql) => (
             <span
               key={ql}
-              className={`text-xs px-2.5 py-1 rounded-full border border-transparent cursor-pointer select-none transition-all hover:bg-white/10 ${
+              className={`text-xs px-2.5 py-1 rounded-full border border-transparent cursor-pointer select-none transition-all hover:bg-themeHover ${
                 selectedLabels.includes(ql.toLowerCase())
-                  ? 'bg-white text-black hover:bg-white'
-                  : 'bg-white/5 text-text-primary'
+                  ? 'bg-text-primary text-surface-primary hover:bg-text-primary'
+                  : 'bg-surface-input text-text-primary border border-border-hairline'
               }`}
               onClick={() => toggleQuickLabel(ql)}
             >
@@ -182,7 +182,7 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         <div className="flex flex-col gap-2">
           <label className="text-xs font-semibold text-text-primary">
-            Due Date <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-white/5 px-1 py-0.5 rounded-sm">Optional</span>
+            Due Date <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-surface-input px-1 py-0.5 rounded-sm">Optional</span>
           </label>
           <input
             type="date"
@@ -190,16 +190,16 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
             onClick={handleDateClick}
-            className="bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
+            className="bg-surface-input border border-transparent rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
           />
           <div className="flex flex-wrap gap-1.5 mt-2">
             {QUICK_DATES.map(({ label: lbl, days }) => (
               <span
                 key={days}
-                className={`text-xs px-2.5 py-1 rounded-full border border-transparent cursor-pointer select-none transition-all hover:bg-white/10 ${
+                className={`text-xs px-2.5 py-1 rounded-full border border-transparent cursor-pointer select-none transition-all hover:bg-themeHover ${
                   activeQuickDate === days
-                    ? 'bg-white text-black hover:bg-white'
-                    : 'bg-white/5 text-text-primary'
+                    ? 'bg-text-primary text-surface-primary hover:bg-text-primary'
+                    : 'bg-surface-input text-text-primary border border-border-hairline'
                 }`}
                 onClick={() => setDueDate(getFormattedDateOffset(days))}
               >
@@ -207,6 +207,7 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
               </span>
             ))}
             <span
+              key="clear-due"
               className="text-xs px-2.5 py-1 rounded-full border border-transparent cursor-pointer select-none transition-all bg-accent-red/10 text-accent-red hover:bg-accent-red/20"
               onClick={() => setDueDate('')}
             >
@@ -216,12 +217,12 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-xs font-semibold text-text-primary">
-            Routine Type <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-white/5 px-1 py-0.5 rounded-sm">Optional</span>
+            Routine Type <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-surface-input px-1 py-0.5 rounded-sm">Optional</span>
           </label>
           <select
             value={routine}
             onChange={(e) => setRoutine(e.target.value)}
-            className="bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
+            className="bg-surface-input border border-transparent rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
           >
             <option value="">One-time Task</option>
             <option value="daily">Daily Reset</option>
@@ -254,7 +255,7 @@ export default function TaskForm({ initialData, onSubmit, onCancel, submitLabel 
       <div className="flex justify-end gap-3 mt-6">
         <button
           type="button"
-          className="bg-white/8 border-none text-white rounded-full px-5 py-2.5 font-heading text-sm font-medium cursor-pointer flex items-center justify-center transition-all hover:bg-white/15 active:scale-98"
+          className="bg-surface-input border border-border-hairline text-text-primary rounded-full px-5 py-2.5 font-heading text-sm font-medium cursor-pointer flex items-center justify-center transition-all hover:bg-themeHover active:scale-98"
           onClick={onCancel}
         >
           Cancel

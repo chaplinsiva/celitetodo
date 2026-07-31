@@ -287,17 +287,17 @@ export default function ChatBar({
                   const textColor = FINANCE_COLORS[fd?.type] || 'text-accent-red';
                   const bgColor = FINANCE_BGS[fd?.type] || 'bg-accent-red/20';
                   return (
-                    <div className="max-w-[85%] px-3.5 py-2 rounded-lg text-xs leading-normal animate-spring-load bg-white/5 border border-border-hairline text-white rounded-bl-none flex items-center gap-2.5">
+                    <div className="max-w-[85%] px-3.5 py-2 rounded-lg text-xs leading-normal animate-spring-load bg-surface-input border border-border-hairline text-text-primary rounded-bl-none flex items-center gap-2.5">
                       <div className={`w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 ${bgColor} ${textColor}`}>
                         <FinIcon size={12} />
                       </div>
                       <div className="flex flex-col gap-0.5">
-                        <span className="font-medium text-white">{fd?.label || fd?.category}</span>
+                        <span className="font-medium text-text-primary">{fd?.label || fd?.category}</span>
                         <div className="flex items-center gap-2">
                           <span className={`font-semibold text-[0.7rem] ${textColor}`}>
                             {fd?.type === 'income' ? '+' : '-'}₹{fd?.amount?.toLocaleString('en-IN')}
                           </span>
-                          <span className="text-[0.6rem] font-semibold text-text-secondary bg-white/5 border border-border-hairline px-1.5 py-0.5 rounded-sm">
+                          <span className="text-[0.6rem] font-semibold text-text-secondary bg-surface-input border border-border-hairline px-1.5 py-0.5 rounded-sm">
                             {fd?.category}
                           </span>
                         </div>
@@ -311,18 +311,18 @@ export default function ChatBar({
                   const textColor = NOTE_COLORS[nd?.type] || 'text-accent-blue';
                   const bgColor = NOTE_BGS[nd?.type] || 'bg-accent-blue/20';
                   return (
-                    <div className="max-w-[85%] px-3.5 py-2 rounded-lg text-xs leading-normal animate-spring-load bg-white/5 border border-border-hairline text-white rounded-bl-none flex items-center gap-2.5">
+                    <div className="max-w-[85%] px-3.5 py-2 rounded-lg text-xs leading-normal animate-spring-load bg-surface-input border border-border-hairline text-text-primary rounded-bl-none flex items-center gap-2.5">
                       <div className={`w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 ${bgColor} ${textColor}`}>
                         <NoteIcon size={12} />
                       </div>
                       <div className="flex flex-col gap-0.5">
-                        <span className="font-medium text-white">{nd?.title}</span>
+                        <span className="font-medium text-text-primary">{nd?.title}</span>
                         <div className="flex items-center gap-2">
                           <span className={`text-[0.6rem] font-semibold border px-1.5 py-0.5 rounded-sm ${textColor} ${bgColor.replace('/20', '/40')}`}>
                             {nd?.type}
                           </span>
                           {nd?.labels?.map((l, j) => (
-                            <span key={j} className="text-[0.6rem] font-semibold text-text-secondary bg-white/5 border border-border-hairline px-1.5 py-0.5 rounded-sm">
+                            <span key={j} className="text-[0.6rem] font-semibold text-text-secondary bg-surface-input border border-border-hairline px-1.5 py-0.5 rounded-sm">
                               {l}
                             </span>
                           ))}
@@ -332,7 +332,7 @@ export default function ChatBar({
                   );
                 })()}
                 {msg.role === 'system_action' && (
-                  <div className="max-w-[85%] px-3.5 py-2 rounded-lg text-xs leading-normal animate-spring-load bg-white/5 border border-border-hairline text-text-secondary rounded-bl-none flex items-center gap-2">
+                  <div className="max-w-[85%] px-3.5 py-2 rounded-lg text-xs leading-normal animate-spring-load bg-surface-input border border-border-hairline text-text-secondary rounded-bl-none flex items-center gap-2">
                     <Check size={12} className="text-accent-green" />
                     <span>{msg.text}</span>
                   </div>
@@ -364,7 +364,7 @@ export default function ChatBar({
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSaveKey()}
-              className="flex-1 bg-surface-input border border-transparent rounded-sm text-white px-3 py-1.5 font-body text-xs outline-none transition-all focus:bg-white/[0.08] focus:border-border-focus"
+              className="flex-1 bg-surface-input border border-transparent rounded-sm text-text-primary px-3 py-1.5 font-body text-xs outline-none transition-all focus:bg-themeHover focus:border-border-focus"
             />
             <button
               className="bg-accent-green text-white border-none rounded-sm w-8 h-8 flex items-center justify-center cursor-pointer transition-all hover:bg-accent-green/80 flex-shrink-0"
@@ -400,7 +400,7 @@ export default function ChatBar({
         <div className="flex items-center gap-2">
           {chatHistory.length > 0 && !showHistory && (
             <button
-              className="bg-transparent border-none text-text-secondary w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-all hover:text-white hover:bg-white/10"
+              className="bg-transparent border-none text-text-secondary w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-all hover:text-text-primary hover:bg-themeHover"
               onClick={() => setShowHistory(true)}
               title="Show chat history"
             >
@@ -411,7 +411,7 @@ export default function ChatBar({
             className={`w-8 h-8 rounded-full border flex items-center justify-center cursor-pointer transition-all ${
               hasKey
                 ? 'text-accent-purple border-accent-purple/40 bg-accent-purple/5 hover:bg-accent-purple/10'
-                : 'bg-transparent border-border-hairline text-text-secondary hover:text-white hover:bg-white/10'
+                : 'bg-transparent border-border-hairline text-text-secondary hover:text-text-primary hover:bg-themeHover'
             }`}
             onClick={() => setShowKeyInput(!showKeyInput)}
             title={hasKey ? 'API key set ✓' : 'Set API key'}
@@ -429,13 +429,13 @@ export default function ChatBar({
             }}
             onKeyDown={handleKeyDown}
             disabled={isProcessing}
-            className="flex-1 bg-surface-input border border-transparent rounded-full text-white px-4 py-2 font-body text-xs outline-none transition-all focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.1)]"
+            className="flex-1 bg-surface-input border border-transparent rounded-full text-text-primary px-4 py-2 font-body text-xs outline-none transition-all focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.1)]"
           />
           <button
             className={`w-8 h-8 rounded-full border-none flex items-center justify-center cursor-pointer transition-all flex-shrink-0 ${
               message.trim() && hasKey
                 ? 'bg-gradient-to-r from-accent-purple to-accent-blue text-white shadow-[0_2px_12px_rgba(191,90,242,0.3)] hover:scale-105 active:scale-95'
-                : 'bg-white/5 text-text-muted cursor-not-allowed opacity-50'
+                : 'bg-surface-input text-text-muted cursor-not-allowed opacity-50'
             }`}
             onClick={handleSend}
             disabled={!message.trim() || isProcessing || !hasKey}

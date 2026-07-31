@@ -109,13 +109,13 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0f17] text-white selection:bg-pink-500 selection:text-white pb-16">
+    <div className="min-h-screen bg-surface-primary text-text-primary selection:bg-pink-500 selection:text-white pb-16">
       {/* Top Header Navigation */}
-      <nav className="sticky top-0 z-30 backdrop-blur-xl bg-[#0d0f17]/80 border-b border-white/10 px-4 py-4 sm:px-8">
+      <nav className="sticky top-0 z-30 backdrop-blur-xl bg-surface-primary/80 border-b border-border-hairline px-4 py-4 sm:px-8">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2 text-sm text-text-secondary hover:text-white transition-colors"
+            className="flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors"
           >
             <ArrowLeft size={16} />
             <span>Back to Dashboard</span>
@@ -135,7 +135,7 @@ export default function PricingPage() {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-12">
         {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500/10 via-pink-500/10 to-purple-500/10 border border-white/10 text-pink-400 text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500/10 via-pink-500/10 to-purple-500/10 border border-border-hairline text-pink-400 text-xs font-semibold uppercase tracking-wider mb-4">
             <Sparkles size={14} className="animate-spin text-pink-400" />
             Simple, Transparent Pricing
           </div>
@@ -150,11 +150,11 @@ export default function PricingPage() {
           </p>
 
           {/* Billing Switcher */}
-          <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-full bg-white/5 border border-white/10">
+          <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-full bg-surface-input border border-border-hairline">
             <button
               onClick={() => setIsAnnual(false)}
               className={`px-4 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                !isAnnual ? 'bg-gradient-to-r from-blue-500 to-pink-500 text-white shadow-md' : 'text-text-secondary hover:text-white'
+                !isAnnual ? 'bg-gradient-to-r from-blue-500 to-pink-500 text-white shadow-md' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               Monthly Billed
@@ -162,7 +162,7 @@ export default function PricingPage() {
             <button
               onClick={() => setIsAnnual(true)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                isAnnual ? 'bg-gradient-to-r from-blue-500 to-pink-500 text-white shadow-md' : 'text-text-secondary hover:text-white'
+                isAnnual ? 'bg-gradient-to-r from-blue-500 to-pink-500 text-white shadow-md' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               <span>Annual Billed</span>
@@ -184,7 +184,7 @@ export default function PricingPage() {
                 className={`relative flex flex-col justify-between rounded-2xl p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 hover:translate-y-[-4px] ${
                   tier.popular
                     ? 'bg-gradient-to-b from-surface-panel via-surface-panel to-pink-950/20 border-2 border-pink-500/60 shadow-xl shadow-pink-500/10'
-                    : 'bg-surface-panel border border-white/10 hover:border-white/20'
+                    : 'bg-surface-panel border border-border-hairline hover:border-border-hairline/80'
                 }`}
               >
                 {tier.popular && (
@@ -196,9 +196,9 @@ export default function PricingPage() {
 
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-heading text-xl font-bold text-white">{tier.name}</h3>
+                    <h3 className="font-heading text-xl font-bold text-text-primary">{tier.name}</h3>
                     {!tier.popular && tier.badge && (
-                      <span className="text-[11px] px-2 py-0.5 rounded-md bg-white/5 text-text-secondary border border-white/10 font-medium">
+                      <span className="text-[11px] px-2 py-0.5 rounded-md bg-surface-input text-text-secondary border border-border-hairline font-medium">
                         {tier.badge}
                       </span>
                     )}
@@ -206,7 +206,7 @@ export default function PricingPage() {
                   <p className="text-xs text-text-secondary mb-6 min-h-[36px]">{tier.tagline}</p>
 
                   <div className="mb-6 flex items-baseline gap-1">
-                    <span className="font-heading text-4xl font-extrabold text-white">
+                    <span className="font-heading text-4xl font-extrabold text-text-primary">
                       ₹{price}
                     </span>
                     <span className="text-xs text-text-secondary font-normal">
@@ -214,7 +214,7 @@ export default function PricingPage() {
                     </span>
                   </div>
 
-                  <hr className="border-white/10 mb-6" />
+                  <hr className="border-border-hairline mb-6" />
 
                   <div className="space-y-3 mb-8">
                     <p className="text-xs font-semibold uppercase tracking-wider text-text-secondary mb-3">
@@ -235,8 +235,8 @@ export default function PricingPage() {
                     tier.buttonVariant === 'primary'
                       ? 'bg-gradient-to-r from-blue-500 via-pink-500 to-pink-600 text-white hover:opacity-90 shadow-pink-500/25'
                       : tier.buttonVariant === 'secondary'
-                      ? 'bg-white/10 text-white hover:bg-white/15'
-                      : 'bg-transparent border border-white/20 text-white hover:bg-white/5'
+                      ? 'bg-surface-input border border-border-hairline text-text-primary hover:bg-themeHover'
+                      : 'bg-transparent border border-border-hairline text-text-secondary hover:bg-themeHover'
                   }`}
                 >
                   {tier.buttonText}
@@ -247,13 +247,13 @@ export default function PricingPage() {
         </div>
 
         {/* Feature Highlights Banner */}
-        <div className="rounded-2xl p-8 bg-gradient-to-r from-blue-900/20 via-pink-900/20 to-purple-900/20 border border-white/10 mb-20">
+        <div className="rounded-2xl p-8 bg-gradient-to-r from-blue-900/20 via-pink-900/20 to-purple-900/20 border border-border-hairline mb-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div className="p-4">
               <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-3 border border-blue-500/30">
                 <Zap size={22} />
               </div>
-              <h4 className="font-heading font-semibold text-white mb-1">Instant AI Execution</h4>
+              <h4 className="font-heading font-semibold text-text-primary mb-1">Instant AI Execution</h4>
               <p className="text-xs text-text-secondary">
                 Type naturally to schedule tasks, budget money, or generate organized notes instantly.
               </p>
@@ -262,7 +262,7 @@ export default function PricingPage() {
               <div className="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center mx-auto mb-3 border border-pink-500/30">
                 <Shield size={22} />
               </div>
-              <h4 className="font-heading font-semibold text-white mb-1">Privacy & Security</h4>
+              <h4 className="font-heading font-semibold text-text-primary mb-1">Privacy & Security</h4>
               <p className="text-xs text-text-secondary">
                 Your data is synced securely with Supabase and stays encrypted on your device.
               </p>
@@ -271,7 +271,7 @@ export default function PricingPage() {
               <div className="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mx-auto mb-3 border border-purple-500/30">
                 <Sparkles size={22} />
               </div>
-              <h4 className="font-heading font-semibold text-white mb-1">Smart Analytics</h4>
+              <h4 className="font-heading font-semibold text-text-primary mb-1">Smart Analytics</h4>
               <p className="text-xs text-text-secondary">
                 Gain insights into your completed routines and finance monthly savings metrics.
               </p>
@@ -290,17 +290,17 @@ export default function PricingPage() {
               return (
                 <div
                   key={index}
-                  className="rounded-xl bg-surface-panel border border-white/10 overflow-hidden transition-colors"
+                  className="rounded-xl bg-surface-panel border border-border-hairline overflow-hidden transition-colors"
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex items-center justify-between p-5 text-left font-heading text-sm font-semibold text-white hover:bg-white/5 transition-colors cursor-pointer"
+                    className="w-full flex items-center justify-between p-5 text-left font-heading text-sm font-semibold text-text-primary hover:bg-themeHover transition-colors cursor-pointer"
                   >
                     <span>{faq.question}</span>
                     {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                   </button>
                   {isOpen && (
-                    <div className="px-5 pb-5 text-xs sm:text-sm text-text-secondary border-t border-white/5 pt-3">
+                    <div className="px-5 pb-5 text-xs sm:text-sm text-text-secondary border-t border-border-hairline pt-3">
                       {faq.answer}
                     </div>
                   )}
@@ -314,28 +314,28 @@ export default function PricingPage() {
       {/* Subscription Modal / Confirmation */}
       {showModal && selectedPlan && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-[#141724] border border-white/15 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative animate-in fade-in zoom-in-95">
+          <div className="bg-surface-modal border border-border-hairline rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative animate-in fade-in zoom-in-95">
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-pink-500 flex items-center justify-center mx-auto mb-4 text-white shadow-lg shadow-pink-500/30">
               <Sparkles size={26} />
             </div>
 
-            <h3 className="font-heading text-xl font-bold text-white mb-2">
+            <h3 className="font-heading text-xl font-bold text-text-primary mb-2">
               Select {selectedPlan.name}?
             </h3>
             <p className="text-xs text-text-secondary mb-6">
               You selected the <span className="text-pink-400 font-semibold">{selectedPlan.name}</span> plan ({isAnnual ? 'Billed Annually' : 'Billed Monthly'}). This is a mock subscription checkout.
             </p>
 
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-left text-xs space-y-2 mb-6">
+            <div className="p-4 rounded-xl bg-surface-input border border-border-hairline text-left text-xs space-y-2 mb-6">
               <div className="flex justify-between">
                 <span className="text-text-secondary">Plan:</span>
-                <span className="font-semibold text-white">{selectedPlan.name}</span>
+                <span className="font-semibold text-text-primary">{selectedPlan.name}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Billing Cycle:</span>
-                <span className="font-semibold text-white">{isAnnual ? 'Annual (-20%)' : 'Monthly'}</span>
+                <span className="font-semibold text-text-primary">{isAnnual ? 'Annual (-20%)' : 'Monthly'}</span>
               </div>
-              <div className="flex justify-between border-t border-white/10 pt-2 font-bold text-sm">
+              <div className="flex justify-between border-t border-border-hairline pt-2 font-bold text-sm">
                 <span>Total Due:</span>
                 <span className="text-pink-400">
                   ₹{isAnnual ? selectedPlan.annualPrice * 12 : selectedPlan.monthlyPrice}
@@ -347,7 +347,7 @@ export default function PricingPage() {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowModal(false)}
-                className="flex-1 py-2.5 rounded-xl border border-white/15 bg-transparent text-xs font-semibold text-white hover:bg-white/5 cursor-pointer"
+                className="flex-1 py-2.5 rounded-xl border border-border-hairline bg-transparent text-xs font-semibold text-text-secondary hover:bg-themeHover cursor-pointer"
               >
                 Cancel
               </button>

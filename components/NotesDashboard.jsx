@@ -107,7 +107,7 @@ export default function NotesDashboard({ notes, onDeleteNote, onUpdateNote, onOp
                       className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
                         isChecked
                           ? 'bg-accent-purple border-accent-purple text-white'
-                          : 'border-text-secondary bg-transparent hover:border-white'
+                          : 'border-text-secondary bg-transparent hover:border-text-primary'
                       }`}
                     >
                       {isChecked && <Check size={10} strokeWidth={3} />}
@@ -150,8 +150,8 @@ export default function NotesDashboard({ notes, onDeleteNote, onUpdateNote, onOp
               key={key}
               className={`border px-3.5 py-1.5 rounded-full font-body text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 ${
                 filterType === key
-                  ? 'bg-white text-black border-white'
-                  : 'bg-white/5 border-transparent text-text-secondary hover:bg-white/10 hover:text-white'
+                  ? 'bg-text-primary text-surface-primary border-text-primary'
+                  : 'bg-surface-input border-transparent text-text-secondary hover:bg-themeHover hover:text-text-primary'
               }`}
               onClick={() => setFilterType(key)}
             >
@@ -168,7 +168,7 @@ export default function NotesDashboard({ notes, onDeleteNote, onUpdateNote, onOp
               placeholder="Search notes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-white/5 border border-transparent rounded-full text-white pl-9 pr-4 py-1.5 font-body text-xs outline-none w-full transition-all focus:bg-white/[0.08] focus:border-border-focus"
+              className="bg-surface-input border border-border-hairline rounded-full text-text-primary pl-9 pr-4 py-1.5 font-body text-xs outline-none w-full transition-all focus:bg-themeHover focus:border-border-focus"
             />
           </div>
           <button
@@ -191,7 +191,7 @@ export default function NotesDashboard({ notes, onDeleteNote, onUpdateNote, onOp
               return (
                 <div
                   key={note.id}
-                  className="group bg-surface-card border border-border-hairline rounded-lg p-5 flex flex-col justify-between gap-4 transition-all duration-300 hover:bg-surface-card-hover hover:border-white/12 cursor-pointer"
+                  className="group bg-surface-card border border-border-hairline rounded-lg p-5 flex flex-col justify-between gap-4 transition-all duration-300 hover:bg-surface-card-hover hover:border-border-hairline/80 cursor-pointer"
                   onClick={() => onEditNote(note)}
                 >
                   <div className="flex flex-col gap-2 min-w-0">
@@ -201,7 +201,7 @@ export default function NotesDashboard({ notes, onDeleteNote, onUpdateNote, onOp
                       </div>
                       <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
                         <button
-                          className="bg-transparent border-none text-text-secondary w-7 h-7 rounded-sm flex items-center justify-center cursor-pointer transition-all hover:text-white hover:bg-white/[0.08]"
+                          className="bg-transparent border-none text-text-secondary w-7 h-7 rounded-sm flex items-center justify-center cursor-pointer transition-all hover:text-text-primary hover:bg-themeHover"
                           onClick={() => handleCopy(note)}
                           title="Copy content"
                         >
@@ -216,7 +216,7 @@ export default function NotesDashboard({ notes, onDeleteNote, onUpdateNote, onOp
                         </button>
                       </div>
                     </div>
-                    <h3 className="font-heading text-sm font-semibold text-white tracking-tight mt-1">
+                    <h3 className="font-heading text-sm font-semibold text-text-primary tracking-tight mt-1">
                       {note.title}
                     </h3>
                     {renderNoteContent(note)}
@@ -252,7 +252,7 @@ export default function NotesDashboard({ notes, onDeleteNote, onUpdateNote, onOp
             <div className="bg-transparent w-12 h-12 flex items-center justify-center border border-border-hairline rounded-full mb-4">
               <ClipboardList className="text-text-secondary w-6 h-6" size={24} />
             </div>
-            <h3 className="font-heading text-base font-semibold mb-1 text-white">No notes yet</h3>
+            <h3 className="font-heading text-base font-semibold mb-1 text-text-primary">No notes yet</h3>
             <p className="text-text-secondary text-xs max-w-[300px]">
               {searchQuery
                 ? `No notes matching "${searchQuery}".`

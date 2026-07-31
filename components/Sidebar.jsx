@@ -38,7 +38,7 @@ export default function Sidebar({
   return (
     <aside className="hidden md:grid md:grid-cols-2 md:gap-6 lg:flex lg:flex-col lg:gap-10 lg:h-full lg:overflow-y-auto lg:pr-2">
       <section className="bg-surface-panel border border-border-hairline backdrop-blur-3xl rounded-lg p-6">
-        <h2 className="font-heading text-lg font-semibold mb-5 tracking-tight text-white">Filters</h2>
+        <h2 className="font-heading text-lg font-semibold mb-5 tracking-tight text-text-primary">Filters</h2>
         <div className="flex flex-col gap-1.5" id="filterButtons">
           {FILTERS.map(({ key, label, icon: Icon }) => {
             const isActive = activeFilter === key;
@@ -47,8 +47,8 @@ export default function Sidebar({
                 key={key}
                 className={`border-none rounded-sm px-3 py-2 font-body text-sm cursor-pointer flex items-center gap-2.5 w-full transition-all ${
                   isActive
-                    ? 'text-white bg-white/[0.08] font-medium'
-                    : 'text-text-secondary bg-transparent font-normal hover:text-white hover:bg-white/[0.04]'
+                    ? 'text-text-primary bg-themeActive font-medium'
+                    : 'text-text-secondary bg-transparent font-normal hover:text-text-primary hover:bg-themeHover'
                 }`}
                 onClick={() => onFilterChange(key)}
               >
@@ -56,7 +56,7 @@ export default function Sidebar({
                 <span>{label}</span>
                 <span
                   className={`ml-auto text-xs px-1.5 py-0.5 rounded-[6px] transition-all ${
-                    isActive ? 'text-white bg-white/[0.12]' : 'text-text-secondary bg-white/[0.06]'
+                    isActive ? 'text-text-primary bg-themeActive' : 'text-text-secondary bg-surface-input'
                   }`}
                 >
                   {counts[key]}
@@ -81,12 +81,12 @@ export default function Sidebar({
                   <span
                     key={label}
                     className={`text-xs px-2.5 py-0.75 rounded-full border text-text-secondary cursor-pointer flex items-center gap-1.5 transition-all before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:rounded-full before:bg-current ${
-                      isActive ? 'text-white' : ''
+                      isActive ? 'text-text-primary' : ''
                     }`}
                     style={{
                       color,
-                      backgroundColor: isActive ? `${color}25` : 'rgba(255, 255, 255, 0.04)',
-                      borderColor: isActive ? color : 'rgba(255, 255, 255, 0.08)',
+                      backgroundColor: isActive ? `${color}25` : 'var(--surface-input)',
+                      borderColor: isActive ? color : 'var(--border-hairline)',
                     }}
                     onClick={() => onLabelFilterChange(isActive ? null : label)}
                   >

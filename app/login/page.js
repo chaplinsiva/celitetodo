@@ -69,11 +69,11 @@ export default function LoginPage() {
       <div className="relative w-full max-w-[420px] animate-modal-in">
         {/* Logo */}
         <div className="flex flex-col items-center gap-3 mb-8">
-          <div className="flex items-center justify-center w-[56px] h-[56px] rounded-[16px] bg-white/5 border border-border-hairline backdrop-blur-xl shadow-xl">
-            <CheckSquare className="text-white w-[28px] h-[28px]" />
+          <div className="flex items-center justify-center w-[56px] h-[56px] rounded-[16px] bg-surface-input border border-border-hairline backdrop-blur-xl shadow-xl">
+            <CheckSquare className="text-text-primary w-[28px] h-[28px]" />
           </div>
           <div className="text-center">
-            <h1 className="font-heading text-3xl font-semibold tracking-tight text-white">
+            <h1 className="font-heading text-3xl font-semibold tracking-tight text-text-primary">
               Celite Manager
             </h1>
             <p className="text-sm text-text-secondary mt-1 flex items-center justify-center gap-1.5">
@@ -86,11 +86,11 @@ export default function LoginPage() {
         {/* Card */}
         <div className="bg-surface-panel/80 backdrop-blur-3xl border border-border-hairline rounded-2xl p-6 sm:p-8 shadow-2xl">
           {/* Mode toggle */}
-          <div className="relative flex bg-white/5 border border-border-hairline rounded-full p-[3px] mb-6">
+          <div className="relative flex bg-surface-input border border-border-hairline rounded-full p-[3px] mb-6">
             <button
               type="button"
               className={`relative z-10 flex-1 py-2 border-none bg-transparent font-heading text-sm font-medium cursor-pointer rounded-full transition-colors text-center ${
-                mode === 'signin' ? 'text-white' : 'text-text-secondary hover:text-text-primary'
+                mode === 'signin' ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
               }`}
               onClick={() => { setMode('signin'); setError(''); setSuccess(''); }}
             >
@@ -99,14 +99,14 @@ export default function LoginPage() {
             <button
               type="button"
               className={`relative z-10 flex-1 py-2 border-none bg-transparent font-heading text-sm font-medium cursor-pointer rounded-full transition-colors text-center ${
-                mode === 'signup' ? 'text-white' : 'text-text-secondary hover:text-text-primary'
+                mode === 'signup' ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
               }`}
               onClick={() => { setMode('signup'); setError(''); setSuccess(''); }}
             >
               Sign Up
             </button>
             <div
-              className="absolute top-[3px] left-[3px] w-[calc(50%-3px)] h-[calc(100%-6px)] bg-white/10 rounded-full transition-transform duration-300 ease-out pointer-events-none"
+              className="absolute top-[3px] left-[3px] w-[calc(50%-3px)] h-[calc(100%-6px)] bg-themeActive rounded-full transition-transform duration-300 ease-out pointer-events-none"
               style={{
                 transform: mode === 'signin' ? 'translateX(0)' : 'translateX(100%)',
               }}
@@ -125,7 +125,7 @@ export default function LoginPage() {
                 onChange={(e) => { setEmail(e.target.value); setError(''); }}
                 placeholder="you@example.com"
                 autoComplete="email"
-                className="w-full bg-surface-input border border-transparent rounded-lg text-white px-4 py-3 font-body text-sm outline-none transition-all focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.1)] placeholder:text-text-muted"
+                className="w-full bg-surface-input border border-border-hairline rounded-lg text-text-primary px-4 py-3 font-body text-sm outline-none transition-all focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.1)] placeholder:text-text-muted"
               />
             </div>
 
@@ -141,7 +141,7 @@ export default function LoginPage() {
                   onChange={(e) => { setPassword(e.target.value); setError(''); }}
                   placeholder={mode === 'signup' ? 'Min 6 characters' : 'Your password'}
                   autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-                  className="w-full bg-surface-input border border-transparent rounded-lg text-white px-4 py-3 pr-11 font-body text-sm outline-none transition-all focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.1)] placeholder:text-text-muted"
+                  className="w-full bg-surface-input border border-border-hairline rounded-lg text-text-primary px-4 py-3 pr-11 font-body text-sm outline-none transition-all focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.1)] placeholder:text-text-muted"
                 />
                 <button
                   type="button"

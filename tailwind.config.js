@@ -6,6 +6,7 @@ module.exports = {
     './hooks/**/*.{js,jsx}',
     './lib/**/*.{js,jsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -14,15 +15,16 @@ module.exports = {
       },
       colors: {
         surface: {
-          primary: '#000000',
-          panel: 'rgba(28, 28, 30, 0.75)',
-          card: 'rgba(28, 28, 30, 0.45)',
-          'card-hover': 'rgba(44, 44, 46, 0.6)',
-          input: 'rgba(255, 255, 255, 0.06)',
+          primary: 'var(--surface-primary)',
+          panel: 'var(--surface-panel)',
+          card: 'var(--surface-card)',
+          'card-hover': 'var(--surface-card-hover)',
+          input: 'var(--surface-input)',
+          modal: 'var(--surface-modal)',
         },
         border: {
-          hairline: 'rgba(255, 255, 255, 0.08)',
-          focus: '#0071e3',
+          hairline: 'var(--border-hairline)',
+          focus: 'var(--border-focus)',
         },
         accent: {
           blue: '#0071e3',
@@ -34,10 +36,12 @@ module.exports = {
           yellow: '#ffd60a',
         },
         text: {
-          primary: '#f5f5f7',
-          secondary: '#86868b',
-          muted: '#48484a',
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          muted: 'var(--text-muted)',
         },
+        themeActive: 'var(--bg-active)',
+        themeHover: 'var(--bg-hover)',
       },
       borderRadius: {
         sm: '8px',

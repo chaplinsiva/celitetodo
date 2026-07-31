@@ -37,11 +37,11 @@ export default function AddTransactionModal({ isOpen, onClose, onAdd }) {
       aria-label="Add Transaction"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-[#1c1c1e] border border-border-hairline rounded-lg w-full max-w-[440px] p-7 shadow-[0_30px_60px_rgba(0,0,0,0.8)] animate-modal-in relative mx-auto">
+      <div className="bg-surface-modal border border-border-hairline rounded-lg w-full max-w-[440px] p-7 shadow-[0_30px_60px_rgba(0,0,0,0.8)] animate-modal-in relative mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="font-heading text-xl font-semibold text-white">Add Transaction</h2>
+          <h2 className="font-heading text-xl font-semibold text-text-primary">Add Transaction</h2>
           <button
-            className="bg-transparent border-none text-text-secondary cursor-pointer p-1 transition-colors hover:text-white"
+            className="bg-transparent border-none text-text-secondary cursor-pointer p-1 transition-colors hover:text-text-primary"
             aria-label="Close modal"
             onClick={onClose}
           >

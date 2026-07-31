@@ -1,11 +1,19 @@
 'use client';
 
-import { CheckSquare, Wallet, FileText, LogOut, Sparkles } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { CheckSquare, Wallet, FileText, LogOut, Sparkles, Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function Header({ tasks, activeTab, onTabChange, financeStats, notesStats }) {
   const { user, signOut } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const totalTasks = tasks?.length || 0;
   const completedTasks = tasks?.filter((t) => t.completed).length || 0;
   const routinesTasks = tasks?.filter((t) => !!t.routine).length || 0;
@@ -40,7 +48,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
           {activeTab === 'tasks' && (
             <>
               <div className="flex items-center gap-1.5">
-                <span className="font-heading text-sm font-semibold text-white">{totalTasks}</span>
+                <span className="font-heading text-sm font-semibold text-text-primary">{totalTasks}</span>
                 <span className="text-xs text-text-secondary">Tasks</span>
               </div>
               <span className="text-text-muted">•</span>
@@ -116,6 +124,17 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
             <span>Pricing</span>
           </Link>
 
+          {/* Theme Toggle */}
+          {mounted && (
+            <button
+              onClick={toggleTheme}
+              className="flex items-center justify-center w-[30px] h-[30px] rounded-full border border-border-hairline bg-transparent hover:bg-themeHover text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
+          )}
+
           {/* User avatar + sign out */}
           {user && (
             <>
@@ -142,10 +161,10 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
       </div>
 
       {/* Tab Switcher */}
-      <div className="relative flex bg-white/5 border border-border-hairline rounded-full p-[3px] w-full max-w-[360px]">
+      <div className="relative flex bg-surface-input border border-border-hairline rounded-full p-[3px] w-full max-w-[360px]">
         <button
           className={`relative z-10 flex-1 flex items-center gap-1.5 py-1.5 border-none bg-transparent font-heading text-[0.82rem] font-medium cursor-pointer rounded-full transition-colors justify-center ${
-            activeTab === 'tasks' ? 'text-white' : 'text-text-secondary hover:text-text-primary'
+            activeTab === 'tasks' ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
           }`}
           onClick={() => onTabChange('tasks')}
         >
@@ -154,7 +173,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
         </button>
         <button
           className={`relative z-10 flex-1 flex items-center gap-1.5 py-1.5 border-none bg-transparent font-heading text-[0.82rem] font-medium cursor-pointer rounded-full transition-colors justify-center ${
-            activeTab === 'money' ? 'text-white' : 'text-text-secondary hover:text-text-primary'
+            activeTab === 'money' ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
           }`}
           onClick={() => onTabChange('money')}
         >
@@ -163,7 +182,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
         </button>
         <button
           className={`relative z-10 flex-1 flex items-center gap-1.5 py-1.5 border-none bg-transparent font-heading text-[0.82rem] font-medium cursor-pointer rounded-full transition-colors justify-center ${
-            activeTab === 'notes' ? 'text-white' : 'text-text-secondary hover:text-text-primary'
+            activeTab === 'notes' ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
           }`}
           onClick={() => onTabChange('notes')}
         >
@@ -171,7 +190,7 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
           <span>Notes</span>
         </button>
         <div
-          className="absolute top-[3px] left-[3px] w-[calc(33.333%-3px)] h-[calc(100%-6px)] bg-gradient-to-r from-blue-500/20 to-pink-500/20 border border-white/10 rounded-full transition-transform duration-300 ease-out pointer-events-none"
+          className="absolute top-[3px] left-[3px] w-[calc(33.333%-3px)] h-[calc(100%-6px)] bg-gradient-to-r from-blue-500/20 to-pink-500/20 border border-border-hairline rounded-full transition-transform duration-300 ease-out pointer-events-none"
           style={{
             transform:
               activeTab === 'tasks'
