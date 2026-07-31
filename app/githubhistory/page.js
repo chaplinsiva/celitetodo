@@ -38,6 +38,15 @@ export default function GitHubHistoryPage() {
     if (typeof window !== 'undefined') {
       const origin = window.location.origin;
       setWebhookUrl(`${origin}/api/github/webhook`);
+      const cached = localStorage.getItem('celite_github_events_history');
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setEvents(parsed);
+          }
+        } catch (e) {}
+      }
     }
   }, []);
 
@@ -47,7 +56,23 @@ export default function GitHubHistoryPage() {
       const res = await fetch('/api/github/events');
       const data = await res.json();
       if (data.success && Array.isArray(data.events)) {
-        setEvents(data.events);
+        setEvents((prev) => {
+          const map = new Map();
+          // Keep existing events
+          prev.forEach((item) => map.set(item.id || `${item.title}-${item.created_at}`, item));
+          // Add new incoming events from server
+          data.events.forEach((item) =>
+            map.set(item.id || `${item.title}-${item.created_at}`, item)
+          );
+
+          const merged = Array.from(map.values());
+          merged.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+          if (typeof window !== 'undefined' && merged.length > 0) {
+            localStorage.setItem('celite_github_events_history', JSON.stringify(merged));
+          }
+          return merged;
+        });
       }
     } catch (err) {
       console.error('Failed to fetch GitHub events:', err);
@@ -75,6 +100,9 @@ export default function GitHubHistoryPage() {
     try {
       await fetch('/api/github/events', { method: 'DELETE' });
       setEvents([]);
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('celite_github_events_history');
+      }
     } catch (err) {
       console.error('Failed to clear events:', err);
     }
@@ -177,7 +205,8 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
               </span>
             </div>
             <p className="text-xs text-text-secondary mt-0.5">
-              Live GitHub repository event stream for <code className="text-accent-blue font-mono">celitetodo</code>
+              Live GitHub repository event stream for{' '}
+              <code className="text-accent-blue font-mono">celitetodo</code>
             </p>
           </div>
         </div>
@@ -204,7 +233,11 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
               Configure Real GitHub Webhook
             </h2>
             <p className="text-xs text-text-secondary">
-              Add this Payload URL in your GitHub repo under <span className="text-text-primary font-medium">Settings &gt; Webhooks &gt; Add webhook</span>:
+              Add this Payload URL in your GitHub repo under{' '}
+              <span className="text-text-primary font-medium">
+                Settings &gt; Webhooks &gt; Add webhook
+              </span>
+              :
             </p>
             <div className="flex items-center gap-2 mt-2 bg-black/50 border border-border-hairline rounded-md px-3 py-2 max-w-2xl">
               <span className="text-xs font-mono text-emerald-400 select-all truncate">
@@ -234,15 +267,24 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
         <div className="mt-4 pt-3 border-t border-border-hairline grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-text-secondary">
           <div className="flex items-start gap-2">
             <span className="text-accent-blue font-bold">1.</span>
-            <span>Content type: <strong className="text-text-primary font-mono">application/json</strong></span>
+            <span>
+              Content type:{' '}
+              <strong className="text-text-primary font-mono">application/json</strong>
+            </span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-accent-blue font-bold">2.</span>
-            <span>Events: Select <strong className="text-text-primary">Just the push event</strong> (or Individual events)</span>
+            <span>
+              Events: Select <strong className="text-text-primary">Just the push event</strong> (or
+              Individual events)
+            </span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-accent-blue font-bold">3.</span>
-            <span>Click <strong className="text-emerald-400">Add webhook</strong> — events will stream live below!</span>
+            <span>
+              Click <strong className="text-emerald-400">Add webhook</strong> — events will stream
+              live below!
+            </span>
           </div>
         </div>
 
@@ -272,7 +314,10 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
       <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mb-6">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+          <Search
+            size={15}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"
+          />
           <input
             type="text"
             placeholder="Search commits, authors, branches..."
@@ -343,13 +388,21 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
             <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-1">
               <Radio className="w-6 h-6 animate-pulse" />
             </div>
-            <p className="text-base font-semibold text-text-primary">Awaiting Real GitHub Webhook Events...</p>
+            <p className="text-base font-semibold text-text-primary">
+              Awaiting Real GitHub Webhook Events...
+            </p>
             <p className="text-xs text-text-secondary max-w-md leading-relaxed">
-              No mock data generated. When you perform a <code className="text-accent-blue font-mono">git push</code> to your GitHub repository, GitHub will post the live payload to <code className="text-emerald-400 font-mono">/api/github/webhook</code> and it will display here automatically in real time!
+              No mock data generated. When you perform a{' '}
+              <code className="text-accent-blue font-mono">git push</code> to your GitHub
+              repository, GitHub will post the live payload to{' '}
+              <code className="text-emerald-400 font-mono">/api/github/webhook</code> and it will
+              display here automatically in real time!
             </p>
             <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-black/40 border border-white/10 text-xs font-mono text-text-secondary">
               <AlertCircle size={13} className="text-accent-yellow" />
-              <span>Ready & Listening on <strong className="text-text-primary">{webhookUrl}</strong></span>
+              <span>
+                Ready & Listening on <strong className="text-text-primary">{webhookUrl}</strong>
+              </span>
             </div>
           </div>
         ) : (
@@ -378,8 +431,8 @@ CREATE POLICY "Allow public insert" ON public.github_events FOR INSERT WITH CHEC
                             isMain
                               ? 'bg-blue-500/10 text-blue-400 border-blue-500/30'
                               : isDevelop
-                              ? 'bg-purple-500/10 text-purple-400 border-purple-500/30'
-                              : 'bg-white/5 text-text-secondary border-white/10'
+                                ? 'bg-purple-500/10 text-purple-400 border-purple-500/30'
+                                : 'bg-white/5 text-text-secondary border-white/10'
                           }`}
                         >
                           {evt.branch}
