@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckSquare, Wallet, FileText, LogOut, Sparkles } from 'lucide-react';
+import { CheckSquare, Wallet, FileText, LogOut, Sparkles, GitBranch } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
@@ -105,6 +105,17 @@ export default function Header({ tasks, activeTab, onTabChange, financeStats, no
               </div>
             </>
           )}
+
+          {/* GitHub History Button */}
+          <Link
+            href="/githubhistory"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/30 hover:border-blue-400 hover:scale-105 transition-all shadow-sm cursor-pointer"
+            id="github-history-button"
+            title="View GitHub Webhook Activity History"
+          >
+            <GitBranch className="w-3.5 h-3.5 text-blue-400" />
+            <span className="hidden sm:inline">GitHub History</span>
+          </Link>
 
           {/* Pricing Button */}
           <Link
