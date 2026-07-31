@@ -45,7 +45,7 @@ export default function TransactionItem({ transaction, onDelete, onEdit }) {
 
   return (
     <li
-      className="group bg-surface-card border border-border-hairline rounded-md p-4 flex gap-4 items-center transition-all duration-300 animate-spring-load hover:bg-surface-card-hover hover:border-white/12 cursor-pointer"
+      className="group bg-surface-card border border-border-hairline rounded-md p-4 flex gap-4 items-center transition-all duration-300 animate-spring-load hover:bg-surface-card-hover hover:border-border-hairline/80 cursor-pointer"
       onClick={() => onEdit(tx)}
     >
       <div className={`w-[38px] h-[38px] rounded-lg border flex items-center justify-center flex-shrink-0 ${config.bgColor} ${config.borderColor}`}>
@@ -53,13 +53,13 @@ export default function TransactionItem({ transaction, onDelete, onEdit }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-4">
-          <span className="font-heading text-sm font-medium text-white truncate">{tx.label || tx.category}</span>
+          <span className="font-heading text-sm font-medium text-text-primary truncate">{tx.label || tx.category}</span>
           <span className={`font-heading text-sm font-semibold whitespace-nowrap ${config.textColor}`}>
             {config.sign}₹{tx.amount.toLocaleString('en-IN')}
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-2 mt-1.5">
-          <span className="text-[0.6rem] font-semibold text-text-secondary bg-white/5 border border-border-hairline px-2 py-0.5 rounded-sm">{tx.category}</span>
+          <span className="text-[0.6rem] font-semibold text-text-secondary bg-surface-input border border-border-hairline px-2 py-0.5 rounded-sm">{tx.category}</span>
           <span className={`text-[0.6rem] font-semibold border px-1.5 py-0.5 rounded-sm ${config.textColor} ${config.borderColor.replace('/20', '/40')}`}>
             {config.label}
           </span>

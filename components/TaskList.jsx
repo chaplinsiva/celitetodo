@@ -107,7 +107,7 @@ export default function TaskList({
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-secondary w-4 h-4 pointer-events-none" size={16} />
           <input
             type="text"
-            className="bg-white/5 border border-transparent rounded-full text-white pl-10 pr-24 py-2 font-body text-sm outline-none w-full transition-all focus:bg-white/[0.08] focus:border-border-focus"
+            className="bg-surface-input border border-border-hairline rounded-full text-text-primary pl-10 pr-24 py-2 font-body text-sm outline-none w-full transition-all focus:bg-themeHover focus:border-border-focus"
             placeholder={
               searchMode === 'semantic'
                 ? "Semantic search: try 'workout', 'purchase', or 'chores'..."
@@ -119,10 +119,10 @@ export default function TaskList({
           />
           <button
             type="button"
-            className={`absolute right-1.5 top-1/2 -translate-y-1/2 border rounded-full px-2 py-1 text-[0.7rem] font-heading font-medium flex items-center gap-1 cursor-pointer transition-all hover:bg-white/[0.12] hover:text-white ${
+            className={`absolute right-1.5 top-1/2 -translate-y-1/2 border rounded-full px-2 py-1 text-[0.7rem] font-heading font-medium flex items-center gap-1 cursor-pointer transition-all hover:bg-themeHover hover:text-text-primary ${
               searchMode === 'semantic'
                 ? 'bg-gradient-to-br from-accent-purple/20 to-accent-blue/20 border-accent-purple/40 text-accent-purple shadow-[0_0_10px_rgba(191,90,242,0.15)] hover:from-accent-purple/30 hover:to-accent-blue/30 hover:border-accent-purple/60 hover:shadow-[0_0_12px_rgba(191,90,242,0.3)]'
-                : 'bg-white/5 border-border-hairline text-text-secondary'
+                : 'bg-surface-input border-border-hairline text-text-secondary'
             }`}
             title={`Toggle Search Mode (Current: ${searchMode === 'semantic' ? 'Semantic' : 'Word'})`}
             onClick={() => onSearchModeChange(searchMode === 'word' ? 'semantic' : 'word')}
@@ -136,7 +136,7 @@ export default function TaskList({
             <label htmlFor="taskSort" className="text-sm text-text-secondary">Sort by:</label>
             <select
               id="taskSort"
-              className="bg-surface-card border border-border-hairline rounded-sm text-text-primary px-2.5 py-1.5 font-body text-xs outline-none cursor-pointer appearance-none pr-7 bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%2386868b%22 stroke-width=%222%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 d=%22M19 9l-7 7-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_0.5rem_center] bg-[length:0.8rem] transition-all hover:border-white/25"
+              className="bg-surface-card border border-border-hairline rounded-sm text-text-primary px-2.5 py-1.5 font-body text-xs outline-none cursor-pointer appearance-none pr-7 bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%2386868b%22 stroke-width=%222%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 d=%22M19 9l-7 7-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_0.5rem_center] bg-[length:0.8rem] transition-all hover:border-border-focus"
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
             >
@@ -175,7 +175,7 @@ export default function TaskList({
             <div className="bg-transparent w-12 h-12 flex items-center justify-center border border-border-hairline rounded-full mb-4">
               <ClipboardList className="text-text-secondary w-6 h-6" size={24} />
             </div>
-            <h3 className="font-heading text-base font-semibold mb-1 text-white">No tasks found</h3>
+            <h3 className="font-heading text-base font-semibold mb-1 text-text-primary">No tasks found</h3>
             <p className="text-text-secondary text-xs max-w-[300px]">{emptyMsg}</p>
           </div>
         )}

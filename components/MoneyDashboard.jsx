@@ -60,48 +60,48 @@ export default function MoneyDashboard({
       {/* Balance Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-surface-panel border border-accent-blue/20 shadow-[0_0_15px_rgba(0,113,227,0.1)] rounded-lg p-5 flex items-center gap-4">
-          <div className="w-[38px] h-[38px] rounded-lg bg-white/5 border border-border-hairline flex items-center justify-center text-white flex-shrink-0">
+          <div className="w-[38px] h-[38px] rounded-lg bg-surface-input border border-border-hairline flex items-center justify-center text-text-primary flex-shrink-0">
             <Wallet size={18} />
           </div>
           <div className="flex flex-col gap-0.5 min-w-0">
             <span className="text-[0.7rem] text-text-secondary font-medium uppercase tracking-wider">Available Balance</span>
-            <span className={`font-heading text-lg font-bold truncate ${availableBalance < 0 ? 'text-accent-red' : 'text-white'}`}>
+            <span className={`font-heading text-lg font-bold truncate ${availableBalance < 0 ? 'text-accent-red' : 'text-text-primary'}`}>
               ₹{availableBalance.toLocaleString('en-IN')}
             </span>
           </div>
         </div>
 
         <div className="bg-surface-panel border border-accent-green/20 shadow-[0_0_15px_rgba(48,209,88,0.1)] rounded-lg p-5 flex items-center gap-4">
-          <div className="w-[38px] h-[38px] rounded-lg bg-white/5 border border-border-hairline flex items-center justify-center text-white flex-shrink-0">
+          <div className="w-[38px] h-[38px] rounded-lg bg-surface-input border border-border-hairline flex items-center justify-center text-text-primary flex-shrink-0">
             <TrendingUp size={18} />
           </div>
           <div className="flex flex-col gap-0.5 min-w-0">
             <span className="text-[0.7rem] text-text-secondary font-medium uppercase tracking-wider">Total Income</span>
-            <span className="font-heading text-lg font-bold text-white truncate">
+            <span className="font-heading text-lg font-bold text-text-primary truncate">
               ₹{totalIncome.toLocaleString('en-IN')}
             </span>
           </div>
         </div>
 
         <div className="bg-surface-panel border border-accent-blue/20 shadow-[0_0_15px_rgba(0,113,227,0.1)] rounded-lg p-5 flex items-center gap-4">
-          <div className="w-[38px] h-[38px] rounded-lg bg-white/5 border border-border-hairline flex items-center justify-center text-white flex-shrink-0">
+          <div className="w-[38px] h-[38px] rounded-lg bg-surface-input border border-border-hairline flex items-center justify-center text-text-primary flex-shrink-0">
             <PiggyBank size={18} />
           </div>
           <div className="flex flex-col gap-0.5 min-w-0">
             <span className="text-[0.7rem] text-text-secondary font-medium uppercase tracking-wider">Savings</span>
-            <span className="font-heading text-lg font-bold text-white truncate">
+            <span className="font-heading text-lg font-bold text-text-primary truncate">
               ₹{totalSavings.toLocaleString('en-IN')}
             </span>
           </div>
         </div>
 
         <div className="bg-surface-panel border border-accent-purple/20 shadow-[0_0_15px_rgba(191,90,242,0.1)] rounded-lg p-5 flex items-center gap-4">
-          <div className="w-[38px] h-[38px] rounded-lg bg-white/5 border border-border-hairline flex items-center justify-center text-white flex-shrink-0">
+          <div className="w-[38px] h-[38px] rounded-lg bg-surface-input border border-border-hairline flex items-center justify-center text-text-primary flex-shrink-0">
             <BarChart3 size={18} />
           </div>
           <div className="flex flex-col gap-0.5 min-w-0">
             <span className="text-[0.7rem] text-text-secondary font-medium uppercase tracking-wider">Investments</span>
-            <span className="font-heading text-lg font-bold text-white truncate">
+            <span className="font-heading text-lg font-bold text-text-primary truncate">
               ₹{totalInvestment.toLocaleString('en-IN')}
             </span>
           </div>
@@ -111,7 +111,7 @@ export default function MoneyDashboard({
       {/* Expense Breakdown */}
       {sortedCategories.length > 0 && (
         <div className="bg-surface-panel border border-border-hairline rounded-lg p-5 flex flex-col gap-4">
-          <h3 className="font-heading text-base font-semibold text-white tracking-tight">Expense Breakdown</h3>
+          <h3 className="font-heading text-base font-semibold text-text-primary tracking-tight">Expense Breakdown</h3>
           <div className="flex flex-col gap-3.5">
             {sortedCategories.map(([cat, amount]) => (
               <div key={cat} className="flex flex-col gap-1.5">
@@ -119,7 +119,7 @@ export default function MoneyDashboard({
                   <span className="text-text-primary font-medium">{cat}</span>
                   <span className="text-text-secondary font-semibold">₹{amount.toLocaleString('en-IN')}</span>
                 </div>
-                <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-surface-input rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-accent-purple to-accent-blue rounded-full transition-all duration-500"
                     style={{ width: `${Math.max((amount / maxCategoryAmount) * 100, 4)}%` }}
@@ -139,8 +139,8 @@ export default function MoneyDashboard({
               key={key}
               className={`border px-3.5 py-1.5 rounded-full font-body text-xs font-semibold cursor-pointer transition-all ${
                 filterType === key
-                  ? 'bg-white text-black border-white'
-                  : 'bg-white/5 border-transparent text-text-secondary hover:bg-white/10 hover:text-white'
+                  ? 'bg-text-primary text-surface-primary border-text-primary'
+                  : 'bg-surface-input border-transparent text-text-secondary hover:bg-themeHover hover:text-text-primary'
               }`}
               onClick={() => setFilterType(key)}
             >
@@ -156,7 +156,7 @@ export default function MoneyDashboard({
               placeholder="Search transactions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-white/5 border border-transparent rounded-full text-white pl-9 pr-4 py-1.5 font-body text-xs outline-none w-full transition-all focus:bg-white/[0.08] focus:border-border-focus"
+              className="bg-surface-input border border-border-hairline rounded-full text-text-primary pl-9 pr-4 py-1.5 font-body text-xs outline-none w-full transition-all focus:bg-themeHover focus:border-border-focus"
             />
           </div>
           <button
@@ -187,7 +187,7 @@ export default function MoneyDashboard({
             <div className="bg-transparent w-12 h-12 flex items-center justify-center border border-border-hairline rounded-full mb-4">
               <ClipboardList className="text-text-secondary w-6 h-6" size={24} />
             </div>
-            <h3 className="font-heading text-base font-semibold mb-1 text-white">No transactions yet</h3>
+            <h3 className="font-heading text-base font-semibold mb-1 text-text-primary">No transactions yet</h3>
             <p className="text-text-secondary text-xs max-w-[300px]">
               {searchQuery
                 ? `No transactions matching "${searchQuery}".`

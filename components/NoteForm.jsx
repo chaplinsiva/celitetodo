@@ -87,7 +87,7 @@ export default function NoteForm({ initialData, onSubmit, onCancel, submitLabel 
             setTitle(e.target.value);
             if (titleError) setTitleError('');
           }}
-          className={`bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)] ${
+          className={`bg-surface-input border border-border-hairline rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)] ${
             titleError ? 'border-accent-red focus:border-accent-red focus:shadow-[0_0_0_3px_rgba(255,69,58,0.2)]' : ''
           }`}
         />
@@ -110,21 +110,21 @@ export default function NoteForm({ initialData, onSubmit, onCancel, submitLabel 
           rows={6}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
+          className="bg-surface-input border border-border-hairline rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
         />
       </div>
 
       {/* Labels */}
       <div className="flex flex-col gap-2 mb-5">
         <label className="text-xs font-semibold text-text-primary">
-          Labels <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-white/5 px-1 py-0.5 rounded-sm">Optional</span>
+          Labels <span className="text-[0.65rem] text-text-secondary font-normal ml-1 bg-surface-input px-1 py-0.5 rounded-sm">Optional</span>
         </label>
         <input
           type="text"
           placeholder="Ideas, Work, Personal (comma separated)"
           value={labels}
           onChange={(e) => setLabels(e.target.value)}
-          className="bg-surface-input border border-transparent rounded-sm text-white px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-white/[0.08] focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
+          className="bg-surface-input border border-border-hairline rounded-sm text-text-primary px-3 py-2 font-body text-sm outline-none transition-all w-full focus:bg-themeHover focus:border-border-focus focus:shadow-[0_0_0_3px_rgba(0,113,227,0.15)]"
         />
       </div>
 
@@ -132,7 +132,7 @@ export default function NoteForm({ initialData, onSubmit, onCancel, submitLabel 
       <div className="flex justify-end gap-3 mt-6">
         <button
           type="button"
-          className="bg-white/8 border-none text-white rounded-full px-5 py-2.5 font-heading text-sm font-medium cursor-pointer transition-all hover:bg-white/15 active:scale-98"
+          className="bg-surface-input border border-border-hairline text-text-primary rounded-full px-5 py-2.5 font-heading text-sm font-medium cursor-pointer transition-all hover:bg-themeHover active:scale-98"
           onClick={onCancel}
         >
           Cancel
